@@ -6,6 +6,22 @@ Aplikasi mobile berbasis **Flutter** untuk menampilkan daftar restoran, melakuka
 
 ## ✨ Fitur Utama (Kriteria & Nilai Tambah)
 
+## 📸 Cuplikan Aplikasi
+
+<table align="center">
+  <tr>
+    <td align="center"><b>Halaman Utama (Daftar)</b></td>
+    <td align="center"><b>Halaman Detail (Atas)</b></td>
+    <td align="center"><b>Halaman Detail (Ulasan)</b></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/home_screen.png" width="250" alt="Home Screen"></td>
+    <td><img src="screenshots/detail_screen_1.png" width="250" alt="Detail Screen Top"></td>
+    <td><img src="screenshots/detail_screen_2.png" width="250" alt="Detail Screen Review"></td>
+  </tr>
+</table>
+
+
 ### 🧱 Kriteria Wajib
 - **Halaman Daftar Restoran**: Menampilkan nama, gambar, lokasi, dan rating restoran dari API.
 - **Halaman Detail Restoran**: Menampilkan informasi lengkap termasuk deskripsi panjang, alamat, serta menu makanan & minuman.
