@@ -1,4 +1,5 @@
 class Restaurant {
+  
   const Restaurant({
     required this.id,
     required this.name,
@@ -6,7 +7,9 @@ class Restaurant {
     required this.pictureId,
     required this.city,
     required this.rating,
-  });
+  })
+  
+  ;
 
   factory Restaurant.fromJson(Map<String, dynamic> json) {
     return Restaurant(
@@ -25,4 +28,17 @@ class Restaurant {
   final String pictureId;
   final String city;
   final double rating;
+
+  Map<String, Object?> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'pictureId': pictureId,
+      'city': city,
+      'rating': rating,
+    };
+  }
 }
+
+

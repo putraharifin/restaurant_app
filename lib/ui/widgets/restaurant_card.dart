@@ -7,15 +7,20 @@ class RestaurantCard extends StatelessWidget {
   const RestaurantCard({
     super.key,
     required this.restaurant,
+    required this.heroTag,
     required this.onTap,
+    this.trailing,
   });
 
   final Restaurant restaurant;
+  final String heroTag;
   final VoidCallback onTap;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final trailing = this.trailing;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -27,7 +32,7 @@ class RestaurantCard extends StatelessWidget {
           child: Row(
             children: [
               Hero(
-                tag: restaurant.id,
+                tag: heroTag,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: SizedBox(
@@ -93,6 +98,7 @@ class RestaurantCard extends StatelessWidget {
                   ],
                 ),
               ),
+              if (trailing != null) trailing,
             ],
           ),
         ),

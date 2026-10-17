@@ -1,113 +1,123 @@
-# 🍔 Restaurant App - Dicoding Submission
+# 🍔 Favorite Restaurant App - Dicoding Final Submission
 
-Aplikasi mobile berbasis **Flutter** untuk menampilkan daftar restoran, melakukan pencarian, melihat detail informasi restoran, serta menambahkan ulasan secara *real-time* menggunakan data dari **Dicoding Restaurant API**. Proyek ini menerapkan arsitektur kode yang bersih (Clean Code) dan manajemen state yang reaktif.
+Aplikasi mobile berbasis **Flutter** tingkat lanjut yang merupakan pengembangan dari proyek Restaurant App sebelumnya. Proyek ini menambahkan fitur penyimpanan lokal reaktif untuk daftar favorit menggunakan **SQLite**, manajemen persistensi tema & reminder via **Shared Preferences**, penjadwalan latar belakang (*Background Scheduler*) menggunakan **Workmanager**, serta diuji secara komprehensif menggunakan cakupan **Automated Testing**.
+
+Aplikasi ini menerapkan standar kode bersih (Clean Code), arsitektur terpisah, dan bebas dari error overflow visual.
 
 ---
 
-## ✨ Fitur Utama (Kriteria & Nilai Tambah)
+## ✨ Fitur Utama & Kriteria Kelulusan (Final Update)
 
-## 📸 Cuplikan Aplikasi
+### 🧱 Kriteria Wajib Baru (Submission Final)
+- **Halaman Favorit Restoran**: Halaman khusus yang menampilkan daftar restoran yang ditandai sebagai favorit secara instan tanpa duplikasi data.
+- **Penyimpanan Lokal SQLite**: Menggunakan database lokal **SQLite** (`sqflite`) sebagai sumber kebenaran tunggal (*single source of truth*) data favorit dengan `id` restoran diatur sebagai `PRIMARY KEY`.
+- **Pengaturan Tema Terstruktur**: Menu khusus untuk beralih antara *Light Theme* dan *Dark Theme* secara instan.
+- **Persistensi State via Shared Preferences**: Menyimpan status tema dan status *Daily Reminder* menggunakan **Shared Preferences** agar konfigurasi tidak hilang saat aplikasi ditutup total (*cold boot*).
+- **Fitur Pengaturan Daily Reminder**: Opsi untuk mengaktifkan notifikasi pengingat makan siang yang dijadwalkan secara berkala di halaman pengaturan.
+- **Automated Testing Komprehensif**: Menerapkan pengujian unit (*Unit Testing*) menggunakan paket `mocktail` untuk menguji kondisi awal provider, kondisi sukses muat data API, dan kondisi gagal muat data API secara terisolasi.
+
+### 🌟 Fitur Tambahan (Strategi Nilai Bintang 5)
+- **Modifikasi Notifikasi Daily Reminder Acak**: Mengintegrasikan **Workmanager** dan **Flutter Local Notifications** untuk menembak API Dicoding secara langsung di latar belakang tepat pukul 11:00 AM, mengacak pilihan restoran memakai fungsi `Random`, dan memunculkan namanya secara dinamis di banner notifikasi HP.
+- **Aliran Data Reaktif Bebas Flicker**: Inisialisasi *Shared Preferences* dimuat langsung di dalam fungsi `main()` sebelum `runApp()`, menjamin layar mode gelap tidak mengalami kedipan putih saat aplikasi dibuka dari kondisi mati.
+
+---
+
+## 📸 Cuplikan Aplikasi Terbaru
 
 <table align="center">
   <tr>
-    <td align="center"><b>Halaman Utama (Daftar)</b></td>
-    <td align="center"><b>Halaman Detail (Atas)</b></td>
-    <td align="center"><b>Halaman Detail (Ulasan)</b></td>
+    <td align="center"><b>Daftar Restoran (Light)</b></td>
+    <td align="center"><b>Detail Restoran (Dark)</b></td>
+    <td align="center"><b>Restoran Favorit (Dark)</b></td>
+    <td align="center"><b>Menu Pengaturan (Dark)</b></td>
   </tr>
   <tr>
-    <td><img src="screenshots/home_screen.png" width="250" alt="Home Screen"></td>
-    <td><img src="screenshots/detail_screen_1.png" width="250" alt="Detail Screen Top"></td>
-    <td><img src="screenshots/detail_screen_2.png" width="250" alt="Detail Screen Review"></td>
+    <td><img src="screenshots/home_screen.png" width="180" alt="Home Screen"></td>
+    <td><img src="screenshots/detail_screen.png" width="180" alt="Detail Screen Dark"></td>
+    <td><img src="screenshots/favorite_screen.png" width="180" alt="Favorite Screen"></td>
+    <td><img src="screenshots/settings.png" width="180" alt="Settings Dark"></td>
   </tr>
 </table>
 
-
-### 🧱 Kriteria Wajib
-- **Halaman Daftar Restoran**: Menampilkan nama, gambar, lokasi, dan rating restoran dari API.
-- **Halaman Detail Restoran**: Menampilkan informasi lengkap termasuk deskripsi panjang, alamat, serta menu makanan & minuman.
-- **Manajemen State**: Menggunakan library **Provider** yang dikombinasikan dengan **Sealed Class** untuk mengelola status data secara aman (`Loading`, `Loaded`, `NoData`, `Error`).
-- **Indikator Loading**: Animasi pemuat data (`CircularProgressIndicator`) yang muncul di setiap proses asynchronous API.
-- **Kustomisasi Tema**: Mendukung **Light Theme** dan **Dark Theme** kustom dengan jenis font **Poppins** (*Google Fonts*).
-
-### 🌟 Fitur Tambahan (Nilai Bintang 5)
-- **Fitur Pencarian**: Kolom pencarian dinamis untuk menyaring restoran berdasarkan nama, kategori, atau menu.
-- **Fitur Review**: Menampilkan ulasan pelanggan serta menyediakan *form* untuk menambahkan ulasan baru via HTTP POST.
-- **Animasi Hero**: Transisi gambar yang halus dan interaktif saat berpindah dari halaman daftar ke halaman detail.
-- **Pesan Error yang Informatif**: Dilengkapi tombol *Retry* (Coba Lagi) jika perangkat kehilangan koneksi internet.
-
 ---
 
-## 📂 Struktur Direktori Proyek
+## 📂 Struktur Direktori Proyek Terkini (Arsitektur Bersih)
 
-Aplikasi ini menggunakan struktur folder modular untuk memisahkan antara logika bisnis, data, dan tampilan (UI):
+Proyek ini telah direstrukturisasi secara modular untuk mendukung perluasan data lokal, data preferensi, serta folder pengujian terpisah:
 
 ```text
 lib/
 ├── data/
-│   ├── api/  # Service HTTP Client & Custom Exception
+│   ├── api/              # Layanan HTTP Client ke Dicoding API
 │   │   ├── api_exception.dart
 │   │   └── api_service.dart
-│   └── models/   # Objek Model Data (JSON Parsing)
+│   ├── database/         # Konfigurasi Database Lokal SQLite (Anti-Duplikat)
+│   │   └── database_helper.dart
+│   ├── preferences/      # Utilitas Penyimpanan Key-Value Shared Preferences
+│   │   └── preferences_helper.dart
+│   ├── background/       # Background Worker & Scheduler Layar Belakang
+│   │   └── background_service.dart
+│   ├── notification/     # Konfigurasi Banner Notifikasi Sistem OS
+│   │   └── notification_helper.dart
+│   └── models/           # Objek Model Data (JSON & Map Parsing)
 │       ├── restaurant.dart
 │       ├── restaurant_detail.dart
 │       └── customer_review.dart
-├── providers/  # State Management (ChangeNotifier)
+├── providers/            # State Management & Logika Bisnis (ChangeNotifier)
 │   ├── restaurant_list_provider.dart
-│   └── restaurant_detail_provider.dart
-├── static/   # Konfigurasi Tema & Status Sealed Class
+│   ├── restaurant_detail_provider.dart
+│   ├── favorite_provider.dart
+│   └── settings_provider.dart
+├── static/               # Pengaturan Tema Kustom & Sealed Class State
 │   ├── app_theme.dart
 │   └── result_state.dart
 ├── ui/
-│   ├── screens/  # Halaman Utama Aplikasi (List & Detail)
+│   ├── screens/          # Layar Visual Antarmuka Utama Aplikasi
+│   │   ├── home_screen.dart        # Navigasi Bawah (List, Favorite, Settings)
 │   │   ├── restaurant_list_screen.dart
-│   │   └── restaurant_detail_screen.dart
-│   └── widgets/   # Komponen Widget UI yang reusable
+│   │   ├── restaurant_detail_screen.dart
+│   │   ├── favorite_screen.dart
+│   │   └── settings_screen.dart
+│   └── widgets/          # Komponen UI Reusable
 │       ├── restaurant_card.dart
-│       ├── restaurant_image.dart
-│       ├── restaurant_search_field.dart
-│       ├── restaurant_detail_content.dart
-│       ├── menu_section.dart
-│       ├── review_card.dart
-│       ├── review_form.dart
-│       ├── loading_indicator.dart
-│       ├── error_view.dart
-│       └── empty_view.dart
-└── main.dart
+│       ├── empty_view.dart
+│       └── loading_indicator.dart
+└── main.dart             # Titik Inisialisasi Utama Aplikasi (Bebas Flicker)
 
+test/                     # DIREKTORI AUTOMATED TESTING (Wajib Sesuai Kriteria)
+└── providers/
+    └── restaurant_list_provider_test.dart  # Unit Test Menggunakan Mocktail
 ```
 
 ---
 
-## 🛠️ Panduan Menjalankan Proyek
+## 🛠️ Panduan Menjalankan Aplikasi & Tes Otomatis
 
-Pastikan Anda telah menginstal **Flutter SDK** versi terbaru pada komputer Anda.
-
-### 1. Kloning atau Ekstrak Proyek
-Jika Anda menerima proyek ini dalam bentuk ZIP, ekstrak terlebih dahulu ke direktori kerja Anda.
-
-### 2. Instal Dependensi (Packages)
-Buka terminal di folder proyek tersebut, lalu jalankan perintah berikut untuk mengunduh semua package yang dibutuhkan (`provider`, `http`, `google_fonts`):
+### 1. Sinkronisasi Library Terbaru
+Buka terminal proyek Anda, lalu unduh paket dependensi SQLite, Shared Preferences, Workmanager, dan Mocktail yang terdaftar di `pubspec.yaml`:
 ```bash
 flutter pub get
 ```
 
-### 3. Jalankan Aplikasi
-Hubungkan emulator (Android/iOS) atau gunakan perangkat asli Anda, kemudian jalankan perintah:
+### 2. Menjalankan Automated Testing (Pengujian Otomatis)
+Guna memvalidasi kebenaran logika provider saat mengambil data dari API (Skenario: *Initial State*, *Success State*, dan *Error State*), jalankan perintah pengujian berikut:
 ```bash
-flutter run
+flutter test
 ```
+*Pastikan terminal menampilkan output hijau `All tests passed!` untuk menjamin kelulusan pengujian.*
 
-### 4. Membersihkan Proyek (Sebelum di-Submit)
-Jika Anda ingin mengompres kembali proyek ini untuk dikirimkan ke Dicoding, bersihkan folder `build/` terlebih dahulu dengan perintah:
+### 3. Membersihkan dan Membungkus Berkas Proyek (Sebelum di-Submit)
+Sebelum mengompres folder proyek menjadi format berkas **ZIP** untuk diunggah ke platform Dicoding, jalankan perintah ini untuk menghapus folder sampah otomatis `build/` agar ukuran berkas ZIP menjadi sangat kecil (di bawah 25 MB):
 ```bash
 flutter clean
 ```
+*Catatan: Jangan menjalankan perintah `flutter run` atau membuka emulator lagi setelah proses cleaning selesai dilakukan.*
 
 ---
 
-## 🌐 Endpoint API yang Digunakan
-Semua data di dalam aplikasi ini bersumber langsung dari **Dicoding Restaurant API**:
-- Daftar Restoran: `GET https://dicoding.dev`
-- Detail Restoran: `GET https://dicoding.dev{id}`
-- Pencarian: `GET https://dicoding.dev{query}`
-- Tambah Review: `POST https://dicoding.dev`
+## 🌐 Informasi Referensi Endpoint API
+Aplikasi ini berkomunikasi secara asinkronus ke server menggunakan **Dicoding Restaurant API**:
+- **Daftar Restoran**: `GET https://dicoding.dev`
+- **Detail Restoran**: `GET https://dicoding.dev{id}`
+- **Pencarian Restoran**: `GET https://dicoding.dev{query}`
+- **Tambah Ulasan**: `POST https://dicoding.dev`

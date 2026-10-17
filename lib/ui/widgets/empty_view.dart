@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class EmptyView extends StatelessWidget {
-  const EmptyView({super.key, required this.message});
+  const EmptyView({
+    super.key,
+    required this.message,
+    this.icon = Icons.search_off_rounded,
+  });
 
   final String message;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +20,7 @@ class EmptyView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              Icons.search_off_rounded,
-              size: 64,
-              color: theme.colorScheme.outline,
-            ),
+            Icon(icon, size: 64, color: theme.colorScheme.outline),
             const SizedBox(height: 16),
             Text(
               message,
