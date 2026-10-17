@@ -88,13 +88,29 @@ test/                     # DIREKTORI AUTOMATED TESTING (Wajib Sesuai Kriteria)
 └── providers/
     └── restaurant_list_provider_test.dart  # Unit Test Menggunakan Mocktail
 ```
+---
+
+## 🛠️ Teknologi & Pustaka yang Digunakan (Tech Stack)
+
+Proyek ini dibangun menggunakan ekosistem teknologi modern Flutter untuk memastikan performa yang optimal, kode yang bersih, serta pemisahan logika yang terstruktur:
+
+- **Bahasa Pemrograman**: [Dart](https://dart.dev) (Versi SDK `^3.13.5`) – Bahasa inti yang dioptimalkan untuk pengembangan antarmuka klien secara cepat.
+- **Framework Utama**: [Flutter](https://flutter.dev) – SDK UI sumber terbuka dari Google untuk membangun aplikasi multi-platform yang dikompilasi secara *native*.
+- **Manajemen State**: `provider` (Versi `^6.1.2`) – Sebagai pengelola status data terpusat dan reaktif yang memisahkan lapisan UI dari logika bisnis aplikasi.
+- **Penyimpanan Database Lokal**: `sqflite` (Versi `^2.4.4+2`) & `path` (Versi `^1.9.1`) – Mesin database relasional SQLite internal perangkat untuk menyimpan dan mengelola daftar restoran favorit secara persisten dengan sistem *Primary Key*.
+- **Penyimpanan Preferensi (Key-Value)**: `shared_preferences` (Versi `^2.5.6`) – Digunakan untuk mempertahankan status pilihan tema (*Light/Dark*) dan *Daily Reminder* pengguna saat aplikasi ditutup.
+- **Penjadwal Latar Belakang (Background Scheduler)**: `workmanager` (Versi `^0.10.10`) – Pustaka untuk mengeksekusi tugas di latar belakang Android secara berkala (setiap 24 jam) guna memicu pengingat makan siang.
+- **Sistem Banner Notifikasi**: `flutter_local_notifications` (Versi `^22.3.2`) – Komponen untuk menampilkan notifikasi *native* ke sistem operasi HP secara dinamis dari hasil acakan data API.
+- **Koneksi Jaringan HTTP**: `http` (Versi `^1.2.2`) – Sebagai *client* untuk melakukan *request* asinkronus data JSON dari Dicoding Restaurant API (HTTP GET & POST).
+- **Desain & Tipografi**: `google_fonts` (Versi `^6.2.1`) dengan font **Poppins** – Memberikan aspek estetika antarmuka yang modern, konsisten, dan nyaman dibaca.
+- **Kerangka Pengujian Otomatis**: `mocktail` (Versi `^1.0.5`) – Pustaka pengujian (*Unit Testing*) modern tanpa *code-generation* untuk meniru (*mocking*) respon API secara terisolasi tanpa koneksi internet asli.
 
 ---
 
 ## 🛠️ Panduan Menjalankan Aplikasi & Tes Otomatis
 
 ### 1. Sinkronisasi Library Terbaru
-Buka terminal proyek Anda, lalu unduh paket dependensi SQLite, Shared Preferences, Workmanager, dan Mocktail yang terdaftar di `pubspec.yaml`:
+Buka terminal proyek, lalu unduh paket dependensi SQLite, Shared Preferences, Workmanager, dan Mocktail yang terdaftar di `pubspec.yaml`:
 ```bash
 flutter pub get
 ```
@@ -104,10 +120,10 @@ Guna memvalidasi kebenaran logika provider saat mengambil data dari API (Skenari
 ```bash
 flutter test
 ```
-*Pastikan terminal menampilkan output hijau `All tests passed!` untuk menjamin kelulusan pengujian.*
+*Pastikan terminal menampilkan output hijau `All tests passed!` untuk menjamin pengujian.*
 
-### 3. Membersihkan dan Membungkus Berkas Proyek (Sebelum di-Submit)
-Sebelum mengompres folder proyek menjadi format berkas **ZIP** untuk diunggah ke platform Dicoding, jalankan perintah ini untuk menghapus folder sampah otomatis `build/` agar ukuran berkas ZIP menjadi sangat kecil (di bawah 25 MB):
+### 3. Membersihkan dan Membungkus Berkas Proyek
+Sebelum mengompres folder proyek menjadi format berkas **ZIP** untuk di submit, jalankan perintah ini untuk menghapus folder sampah otomatis `build/` :
 ```bash
 flutter clean
 ```
