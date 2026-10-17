@@ -4,7 +4,7 @@ import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/providers/restaurant_list_provider.dart';
 import 'package:restaurant_app/static/app_theme.dart';
 import 'package:restaurant_app/ui/screens/restaurant_list_screen.dart';
-
+//cek cek
 void main() {
   runApp(
     MultiProvider(
