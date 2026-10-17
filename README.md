@@ -26,10 +26,10 @@ Aplikasi ini menerapkan standar kode bersih (Clean Code), arsitektur terpisah, d
 
 <table align="center">
   <tr>
-    <td align="center"><b>Daftar Restoran (Light)</b></td>
+    <td align="center"><b>Daftar Restoran (Dark)</b></td>
     <td align="center"><b>Detail Restoran (Dark)</b></td>
     <td align="center"><b>Restoran Favorit (Dark)</b></td>
-    <td align="center"><b>Menu Pengaturan (Dark)</b></td>
+    <td align="center"><b>Menu Pengaturan (Light)</b></td>
   </tr>
   <tr>
     <td><img src="screenshots/home_screen.png" width="180" alt="Home Screen"></td>
